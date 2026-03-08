@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BuildMart Hardware — Your Trusted Hardware Store</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- ======================================================
+     MOBILE NAV
+     ====================================================== -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<nav class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <div class="navbar-brand" style="pointer-events:none;">
+      <div class="navbar-logo"><i class="fas fa-hammer"></i></div>
+      <span class="navbar-brand-name">BuildMart Hardware</span>
+    </div>
+    <button class="mobile-nav-close" id="mobileClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="mobile-nav-links">
+    <a href="index.html"    class="mobile-nav-link"><i class="fas fa-home"></i>        Home</a>
+    <a href="products.html" class="mobile-nav-link"><i class="fas fa-store"></i>       Products</a>
+    <a href="products.html?category=hand-tools"  class="mobile-nav-link"><i class="fas fa-hammer"></i>          Hand Tools</a>
+    <a href="products.html?category=power-tools" class="mobile-nav-link"><i class="fas fa-screwdriver-wrench"></i> Power Tools</a>
+    <a href="products.html?category=electrical"  class="mobile-nav-link"><i class="fas fa-bolt"></i>            Electrical</a>
+    <a href="products.html?category=plumbing"    class="mobile-nav-link"><i class="fas fa-faucet"></i>          Plumbing</a>
+    <a href="cart.html" class="mobile-nav-link"><i class="fas fa-cart-shopping"></i>   Cart</a>
+  </div>
+</nav>
+
+<!-- ======================================================
+     NAVBAR
+     ====================================================== -->
+<header class="navbar">
+  <!-- Top bar -->
+  <div class="navbar-top">
+    <div class="container">
+      <div class="navbar-top-info">
+        <span><i class="fas fa-phone"></i> +92 939 123456</span>
+        <span><i class="fas fa-envelope"></i> info@buildmart.pk</span>
+      </div>
+      <div class="navbar-top-links">
+        <span><i class="fas fa-truck"></i> Free delivery over Rs. 5,000</span>
+        <a href="orders.html"><i class="fas fa-box"></i> My Orders</a>
+      </div>
+    </div>
+  </div>
+  <!-- Main bar -->
+  <div class="navbar-main">
+    <div class="container">
+      <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+      <a href="index.html" class="navbar-brand">
+        <div class="navbar-logo"><i class="fas fa-hammer"></i></div>
+        <div class="navbar-brand-text">
+          <div class="navbar-brand-name">BuildMart Hardware</div>
+          <div class="navbar-brand-tagline">Pirmahal's #1 Hardware Shop</div>
+        </div>
+      </a>
+      <form class="navbar-search" action="products.html" method="get">
+        <i class="fas fa-search navbar-search-icon"></i>
+        <input type="text" name="q" placeholder="Search tools, electrical, plumbing…">
+      </form>
+      <div class="navbar-actions">
+        <a href="cart.html" class="navbar-action-btn" title="Cart">
+          <i class="fas fa-cart-shopping"></i>
+          <span class="cart-badge" style="display:none;">0</span>
+        </a>
+        <a href="#" class="navbar-action-btn" title="Account"><i class="fas fa-user"></i></a>
+      </div>
+    </div>
+  </div>
+  <!-- Nav links -->
+  <nav class="navbar-nav">
+    <div class="container">
+      <a href="index.html"    class="nav-link active"><i class="fas fa-home"></i> Home</a>
+      <a href="products.html" class="nav-link"><i class="fas fa-store"></i> All Products</a>
+      <a href="products.html?category=hand-tools"  class="nav-link"><i class="fas fa-hammer"></i> Hand Tools</a>
+      <a href="products.html?category=power-tools" class="nav-link"><i class="fas fa-screwdriver-wrench"></i> Power Tools</a>
+      <a href="products.html?category=electrical"  class="nav-link"><i class="fas fa-bolt"></i> Electrical</a>
+      <a href="products.html?category=plumbing"    class="nav-link"><i class="fas fa-faucet"></i> Plumbing</a>
+      <a href="products.html?category=safety"      class="nav-link"><i class="fas fa-helmet-safety"></i> Safety</a>
+      <a href="products.html?category=paint"       class="nav-link"><i class="fas fa-paint-roller"></i> Paint</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ======================================================
+     HERO
+     ====================================================== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-label"><i class="fas fa-bolt"></i> Trusted Since 1998</div>
+      <h1 class="hero-title">Your One-Stop<br><span>Hardware Shop</span><br>in Pirmahal</h1>
+      <p class="hero-subtitle">
+        From hand tools to heavy-duty power tools, electrical supplies to plumbing—
+        we carry everything you need to build, fix, and create.
+      </p>
+      <div class="hero-actions">
+        <a href="products.html" class="btn btn-primary btn-lg"><i class="fas fa-store"></i> Shop Now</a>
+        <a href="products.html?category=power-tools" class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,.4);">
+          <i class="fas fa-screwdriver-wrench"></i> Power Tools
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-value">5,000+</div><div class="hero-stat-label">Products</div></div>
+        <div><div class="hero-stat-value">25+</div><div class="hero-stat-label">Years Experience</div></div>
+        <div><div class="hero-stat-value">10,000+</div><div class="hero-stat-label">Happy Customers</div></div>
+        <div><div class="hero-stat-value">8</div><div class="hero-stat-label">Categories</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card wide">
+        <div class="hero-card-icon"><i class="fas fa-screwdriver-wrench"></i></div>
+        <div>
+          <div class="hero-card-name">Cordless Drill (18V)</div>
+          <div class="hero-card-price">Rs. 8,500</div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-icon" style="margin:0 auto 12px;"><i class="fas fa-hammer"></i></div>
+        <div class="hero-card-name">Claw Hammer</div>
+        <div class="hero-card-price">Rs. 1,200</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-icon" style="margin:0 auto 12px;"><i class="fas fa-lightbulb"></i></div>
+        <div class="hero-card-name">LED Bulb Pack</div>
+        <div class="hero-card-price">Rs. 950</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     STATS BAR
+     ====================================================== -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="stat-item">
+      <div class="stat-icon"><i class="fas fa-truck-fast"></i></div>
+      <div><div class="stat-value">Free</div><div class="stat-label">Delivery over Rs. 5,000</div></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon"><i class="fas fa-shield-halved"></i></div>
+      <div><div class="stat-value">100%</div><div class="stat-label">Quality Guaranteed</div></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon"><i class="fas fa-headset"></i></div>
+      <div><div class="stat-value">24/7</div><div class="stat-label">Customer Support</div></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon"><i class="fas fa-rotate-left"></i></div>
+      <div><div class="stat-value">7-Day</div><div class="stat-label">Easy Returns</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     SHOP BY CATEGORY
+     ====================================================== -->
+<section class="categories">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Browse Categories</div>
+      <h2 class="section-title">Shop by Category</h2>
+      <p class="section-subtitle">Explore our wide range of hardware products organized for easy shopping.</p>
+    </div>
+    <div class="categories-grid" id="categoriesGrid">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     FEATURED PRODUCTS
+     ====================================================== -->
+<section class="featured-products">
+  <div class="container">
+    <div class="section-header" style="display:flex;justify-content:space-between;align-items:center;text-align:left;margin-bottom:32px;">
+      <div>
+        <div class="section-label">Top Picks</div>
+        <h2 class="section-title">Featured Products</h2>
+      </div>
+      <a href="products.html" class="btn btn-outline">View All <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="products-grid" id="featuredGrid">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     PROMO BANNER
+     ====================================================== -->
+<section class="promo-banner">
+  <div class="container">
+    <div class="promo-inner">
+      <div>
+        <div class="promo-tag">Limited Offer</div>
+        <h2 class="promo-title">Up to <span>40% Off</span><br>Power Tools Sale</h2>
+        <p class="promo-subtitle">Stock up on professional-grade power tools at unbeatable prices. Offer ends soon!</p>
+        <div class="promo-countdown">
+          <div class="countdown-box"><span class="countdown-value" id="cdDays">02</span><span class="countdown-label">Days</span></div>
+          <div class="countdown-box"><span class="countdown-value" id="cdHours">00</span><span class="countdown-label">Hours</span></div>
+          <div class="countdown-box"><span class="countdown-value" id="cdMins">00</span><span class="countdown-label">Mins</span></div>
+          <div class="countdown-box"><span class="countdown-value" id="cdSecs">00</span><span class="countdown-label">Secs</span></div>
+        </div>
+        <a href="products.html?category=power-tools" class="btn btn-primary btn-lg">
+          <i class="fas fa-screwdriver-wrench"></i> Shop Power Tools
+        </a>
+      </div>
+      <div class="promo-visual">🔧</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     TESTIMONIALS
+     ====================================================== -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Customer Reviews</div>
+      <h2 class="section-title">What Our Customers Say</h2>
+      <p class="section-subtitle">Trusted by contractors, electricians, and homeowners across Pirmahal.</p>
+    </div>
+    <div class="testimonials-grid" id="testimonialsGrid">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     NEWSLETTER
+     ====================================================== -->
+<section class="newsletter">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="newsletter-icon"><i class="fas fa-envelope-open-text"></i></div>
+      <div class="section-label">Stay Updated</div>
+      <h2 class="section-title">Subscribe to Our Newsletter</h2>
+      <p class="section-subtitle">Get the latest deals, new arrivals, and hardware tips delivered to your inbox.</p>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" class="newsletter-input" placeholder="Enter your email address…" required>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     FOOTER
+     ====================================================== -->
+<footer class="footer">
+  <div class="footer-main">
+    <div class="container">
+      <!-- Brand -->
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div class="navbar-logo"><i class="fas fa-hammer"></i></div>
+          <div class="footer-brand-name">BuildMart Hardware</div>
+        </div>
+        <p class="footer-brand-desc">
+          Pirmahal's most trusted hardware shop since 1998. Supplying quality tools,
+          electrical, plumbing, and building materials at competitive prices.
+        </p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <!-- Quick Links -->
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <div class="footer-links">
+          <a href="index.html"    class="footer-link">Home</a>
+          <a href="products.html" class="footer-link">All Products</a>
+          <a href="cart.html"     class="footer-link">My Cart</a>
+          <a href="#"             class="footer-link">About Us</a>
+          <a href="#"             class="footer-link">Contact</a>
+        </div>
+      </div>
+      <!-- Categories -->
+      <div>
+        <div class="footer-col-title">Categories</div>
+        <div class="footer-links">
+          <a href="products.html?category=hand-tools"  class="footer-link">Hand Tools</a>
+          <a href="products.html?category=power-tools" class="footer-link">Power Tools</a>
+          <a href="products.html?category=electrical"  class="footer-link">Electrical</a>
+          <a href="products.html?category=plumbing"    class="footer-link">Plumbing</a>
+          <a href="products.html?category=safety"      class="footer-link">Safety Equipment</a>
+          <a href="products.html?category=paint"       class="footer-link">Paint &amp; Supplies</a>
+          <a href="products.html?category=building"    class="footer-link">Building Materials</a>
+        </div>
+      </div>
+      <!-- Contact -->
+      <div>
+        <div class="footer-col-title">Contact Us</div>
+        <div class="footer-contact-item"><i class="fas fa-location-dot"></i><span>Main Bazar, Pirmahal, Punjab, Pakistan</span></div>
+        <div class="footer-contact-item"><i class="fas fa-phone"></i><span>+92 939 123456</span></div>
+        <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>info@buildmart.pk</span></div>
+        <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Mon–Sat: 8:00 AM – 8:00 PM</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <span>&copy; 2025 BuildMart Hardware. All rights reserved.</span>
+      <div class="footer-payment-icons">
+        <span class="payment-icon">JazzCash</span>
+        <span class="payment-icon">EasyPaisa</span>
+        <span class="payment-icon">Cash</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/api.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script src="js/auth-modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+ Admin credentials
+
+  Email:    admin@ironcraft.pk
+  Password: admin123
+
+
+
+  $env:NODE_OPTIONS="--openssl-legacy-provider"

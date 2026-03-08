@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders — BuildMart Hardware</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .orders-page { padding: 40px 0 60px; background: var(--gray-100); min-height: 60vh; }
+
+    /* Order card */
+    .order-card {
+      background: #fff; border-radius: 16px; box-shadow: var(--shadow-sm);
+      margin-bottom: 20px; overflow: hidden;
+    }
+    .order-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px; border-bottom: 1px solid var(--gray-100); flex-wrap: wrap; gap: 10px;
+    }
+    .order-id   { font-weight: 700; font-size: 15px; color: var(--dark); }
+    .order-date { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+
+    .order-status-badge {
+      padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: capitalize;
+    }
+    .status-pending    { background: #fef3c7; color: #92400e; }
+    .status-processing { background: #dbeafe; color: #1e40af; }
+    .status-shipped    { background: #e0e7ff; color: #3730a3; }
+    .status-delivered  { background: #d1fae5; color: #065f46; }
+    .status-cancelled  { background: #fee2e2; color: #991b1b; }
+
+    /* Timeline */
+    .order-timeline {
+      display: flex; align-items: flex-start; gap: 0;
+      padding: 20px 24px; border-bottom: 1px solid var(--gray-100); overflow-x: auto;
+    }
+    .timeline-step { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 80px; }
+    .timeline-icon {
+      width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 14px; z-index: 1; position: relative;
+    }
+    .timeline-icon.done    { background: var(--success); color: #fff; }
+    .timeline-icon.active  { background: var(--primary); color: #fff; box-shadow: 0 0 0 4px rgba(224,92,26,.2); }
+    .timeline-icon.pending { background: var(--gray-200); color: var(--gray-400); }
+    .timeline-label { font-size: 11px; font-weight: 600; margin-top: 6px; color: var(--gray-600); text-align: center; }
+    .timeline-connector {
+      flex: 1; height: 3px; margin-top: 17px; min-width: 20px;
+    }
+    .timeline-connector.done    { background: var(--success); }
+    .timeline-connector.pending { background: var(--gray-200); }
+
+    /* Items */
+    .order-items { padding: 16px 24px; border-bottom: 1px solid var(--gray-100); }
+    .order-item  { display: flex; align-items: center; gap: 14px; padding: 8px 0; }
+    .order-item + .order-item { border-top: 1px solid var(--gray-100); }
+    .order-item-name { font-size: 14px; font-weight: 600; color: var(--dark); }
+    .order-item-qty  { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+    .order-item-price { margin-left: auto; font-size: 14px; font-weight: 700; color: var(--primary); white-space: nowrap; }
+
+    /* Delivery + Summary */
+    .order-footer {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      padding: 16px 24px;
+    }
+    @media (max-width: 600px) { .order-footer { grid-template-columns: 1fr; } }
+    .order-info-block { padding: 8px 0; }
+    .order-info-block + .order-info-block { border-left: 1px solid var(--gray-100); padding-left: 20px; }
+    @media (max-width: 600px) { .order-info-block + .order-info-block { border-left: none; border-top: 1px solid var(--gray-100); padding-left: 0; padding-top: 12px; margin-top: 4px; } }
+    .order-info-title { font-size: 12px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+    .order-info-row   { font-size: 13px; color: var(--gray-600); margin-bottom: 4px; display: flex; gap: 6px; align-items: flex-start; }
+    .order-info-row i { color: var(--primary); width: 14px; margin-top: 2px; flex-shrink: 0; }
+    .order-total-row  { display: flex; justify-content: space-between; font-size: 13px; color: var(--gray-600); margin-bottom: 4px; }
+    .order-total-row.grand { font-size: 15px; font-weight: 700; color: var(--dark); padding-top: 8px; border-top: 1px solid var(--gray-200); margin-top: 4px; }
+    .order-total-row.grand span:last-child { color: var(--primary); }
+
+    /* Empty state */
+    .no-orders { text-align: center; padding: 60px 20px; }
+    .no-orders i  { font-size: 60px; color: var(--gray-300); margin-bottom: 16px; }
+    .no-orders h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .no-orders p  { color: var(--gray-500); margin-bottom: 24px; }
+
+    /* Track by ID box */
+    .track-box {
+      background: #fff; border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm);
+      margin-bottom: 28px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    }
+    .track-box input {
+      flex: 1; min-width: 200px; padding: 10px 14px; border: 1.5px solid var(--gray-200);
+      border-radius: 10px; font-size: 14px; font-family: inherit;
+    }
+    .track-box input:focus { outline: none; border-color: var(--primary); }
+  </style>
+</head>
+<body>
+
+<!-- Mobile Nav -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<nav class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <div class="navbar-brand" style="pointer-events:none;">
+      <div class="navbar-logo"><i class="fas fa-hammer"></i></div>
+      <span class="navbar-brand-name">BuildMart Hardware</span>
+    </div>
+    <button class="mobile-nav-close" id="mobileClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="mobile-nav-links">
+    <a href="index.html"    class="mobile-nav-link"><i class="fas fa-home"></i>        Home</a>
+    <a href="products.html" class="mobile-nav-link"><i class="fas fa-store"></i>       Products</a>
+    <a href="cart.html"     class="mobile-nav-link"><i class="fas fa-cart-shopping"></i> Cart</a>
+    <a href="orders.html"   class="mobile-nav-link active"><i class="fas fa-box"></i>  My Orders</a>
+  </div>
+</nav>
+
+<!-- Navbar -->
+<header class="navbar">
+  <div class="navbar-top">
+    <div class="container">
+      <div class="navbar-top-info">
+        <span><i class="fas fa-phone"></i> +92 939 123456</span>
+        <span><i class="fas fa-envelope"></i> info@buildmart.pk</span>
+      </div>
+      <div class="navbar-top-links">
+        <span><i class="fas fa-truck"></i> Free delivery over Rs. 5,000</span>
+        <a href="orders.html"><i class="fas fa-box"></i> My Orders</a>
+      </div>
+    </div>
+  </div>
+  <div class="navbar-main">
+    <div class="container">
+      <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+      <a href="index.html" class="navbar-brand">
+        <div class="navbar-logo"><i class="fas fa-hammer"></i></div>
+        <div class="navbar-brand-text">
+          <div class="navbar-brand-name">BuildMart Hardware</div>
+          <div class="navbar-brand-tagline">Pirmahal's #1 Hardware Shop</div>
+        </div>
+      </a>
+      <form class="navbar-search" action="products.html" method="get">
+        <i class="fas fa-search navbar-search-icon"></i>
+        <input type="text" name="q" placeholder="Search products…">
+      </form>
+      <div class="navbar-actions">
+        <a href="cart.html" class="navbar-action-btn" title="Cart">
+          <i class="fas fa-cart-shopping"></i>
+          <span class="cart-badge" style="display:none;">0</span>
+        </a>
+        <a href="#" class="navbar-action-btn" title="Account"><i class="fas fa-user"></i></a>
+      </div>
+    </div>
+  </div>
+  <nav class="navbar-nav">
+    <div class="container">
+      <a href="index.html"    class="nav-link"><i class="fas fa-home"></i> Home</a>
+      <a href="products.html" class="nav-link"><i class="fas fa-store"></i> All Products</a>
+      <a href="cart.html"     class="nav-link"><i class="fas fa-cart-shopping"></i> Cart</a>
+      <a href="orders.html"   class="nav-link active"><i class="fas fa-box"></i> My Orders</a>
+    </div>
+  </nav>
+</header>
+
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <div class="page-header-content">
+      <div>
+        <h1>My Orders</h1>
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <i class="fas fa-chevron-right" style="font-size:10px;"></i>
+          <span>My Orders</span>
+        </div>
+      </div>
+      <a href="products.html" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.4);">
+        <i class="fas fa-store"></i> Continue Shopping
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Orders Content -->
+<main class="orders-page">
+  <div class="container" style="max-width:820px;">
+
+    <!-- Track by Order ID -->
+    <div class="track-box">
+      <i class="fas fa-search" style="color:var(--primary);font-size:18px;"></i>
+      <input type="text" id="trackInput" placeholder="Enter Order ID to track (e.g. A1B2C3D4)">
+      <button class="btn btn-primary" onclick="trackById()" style="white-space:nowrap;">
+        <i class="fas fa-location-dot"></i> Track Order
+      </button>
+    </div>
+
+    <!-- Orders list -->
+    <div id="ordersContainer">
+      <div style="text-align:center;padding:40px;color:var(--gray-400);">
+        <i class="fas fa-spinner fa-spin" style="font-size:28px;"></i>
+        <p style="margin-top:12px;">Loading your orders…</p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-main">
+    <div class="container">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div class="navbar-logo"><i class="fas fa-hammer"></i></div>
+          <div class="footer-brand-name">BuildMart Hardware</div>
+        </div>
+        <p class="footer-brand-desc">Pirmahal's most trusted hardware shop since 1998.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <div class="footer-links">
+          <a href="index.html"    class="footer-link">Home</a>
+          <a href="products.html" class="footer-link">All Products</a>
+          <a href="cart.html"     class="footer-link">My Cart</a>
+          <a href="orders.html"   class="footer-link">My Orders</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-contact-item"><i class="fas fa-location-dot"></i><span>Main Bazar, Pirmahal, Punjab</span></div>
+        <div class="footer-contact-item"><i class="fas fa-phone"></i><span>+92 939 123456</span></div>
+        <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Mon–Sat: 8 AM – 8 PM</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <span>&copy; 2025 BuildMart Hardware. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/api.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/auth-modal.js"></script>
+<script src="js/orders-page.js"></script>
+</body>
+</html>

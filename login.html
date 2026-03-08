@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — BuildMart Hardware</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { background: var(--gray-100); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── Auth Layout ── */
+    .auth-page {
+      flex: 1;
+      display: flex;
+      align-items: stretch;
+      min-height: calc(100vh - 60px);
+    }
+
+    /* ── Left Panel ── */
+    .auth-left {
+      flex: 1;
+      background: linear-gradient(145deg, var(--dark) 0%, #162032 50%, #1e2f46 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-left::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(224,92,26,.22) 0%, transparent 65%);
+      right: -120px; top: -120px;
+      pointer-events: none;
+    }
+    .auth-left::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(99,102,241,.12) 0%, transparent 65%);
+      left: -60px; bottom: -60px;
+      pointer-events: none;
+    }
+
+    .auth-left-logo {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 60px; position: relative; z-index: 1;
+    }
+    .auth-left-logo-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 22px;
+      box-shadow: 0 8px 24px rgba(224,92,26,.4);
+    }
+    .auth-left-brand { font-size: 20px; font-weight: 800; color: #fff; }
+    .auth-left-tagline { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 2px; }
+
+    .auth-left-heading {
+      font-size: 40px; font-weight: 800; color: #fff;
+      line-height: 1.15; letter-spacing: -1px;
+      margin-bottom: 18px; position: relative; z-index: 1;
+    }
+    .auth-left-heading span { color: var(--primary); }
+    .auth-left-sub {
+      font-size: 15px; color: rgba(255,255,255,.55);
+      line-height: 1.8; margin-bottom: 48px;
+      position: relative; z-index: 1; max-width: 380px;
+    }
+
+    .auth-features { list-style: none; position: relative; z-index: 1; }
+    .auth-feature {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .auth-feature:last-child { border-bottom: none; }
+    .auth-feature-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(224,92,26,.18); border: 1px solid rgba(224,92,26,.3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--primary); font-size: 16px; flex-shrink: 0;
+    }
+    .auth-feature-title { font-size: 14px; font-weight: 700; color: #fff; }
+    .auth-feature-desc  { font-size: 12px; color: rgba(255,255,255,.45); margin-top: 1px; }
+
+    /* ── Right Panel ── */
+    .auth-right {
+      width: 520px;
+      flex-shrink: 0;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 56px 52px;
+      overflow-y: auto;
+    }
+
+    .auth-form-header { margin-bottom: 36px; }
+    .auth-form-title {
+      font-size: 28px; font-weight: 800; color: var(--dark);
+      letter-spacing: -.5px; margin-bottom: 8px;
+    }
+    .auth-form-sub { font-size: 14px; color: var(--gray-500); line-height: 1.7; }
+
+    /* Form fields */
+    .auth-field { margin-bottom: 20px; }
+    .auth-field label {
+      display: block; font-size: 13px; font-weight: 700;
+      color: var(--dark-3); margin-bottom: 7px; letter-spacing: .2px;
+    }
+    .auth-input-wrap { position: relative; }
+    .auth-input-wrap i {
+      position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+      color: var(--gray-400); font-size: 15px; pointer-events: none;
+    }
+    .auth-input {
+      width: 100%; padding: 13px 16px 13px 44px;
+      border: 2px solid var(--gray-200); border-radius: var(--radius);
+      font-size: 14px; font-family: inherit; color: var(--dark);
+      background: var(--gray-50); transition: var(--transition);
+      box-sizing: border-box;
+    }
+    .auth-input:focus {
+      outline: none; border-color: var(--primary);
+      background: #fff; box-shadow: 0 0 0 4px var(--primary-bg);
+    }
+    .auth-input::placeholder { color: var(--gray-400); }
+    .auth-input.error { border-color: var(--danger); background: #fff5f5; }
+
+    /* Password toggle */
+    .auth-input-wrap .toggle-pass {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: var(--gray-400); font-size: 15px; padding: 4px;
+      transition: color .2s;
+    }
+    .auth-input-wrap .toggle-pass:hover { color: var(--primary); }
+    .auth-input-wrap.has-toggle .auth-input { padding-right: 44px; }
+
+    /* Error message */
+    .auth-error-msg {
+      background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius-sm);
+      color: var(--danger); font-size: 13px; padding: 10px 14px;
+      margin-bottom: 18px; display: none; align-items: center; gap: 8px;
+    }
+    .auth-error-msg.show { display: flex; }
+    .auth-error-msg i { flex-shrink: 0; }
+
+    /* Remember / Forgot row */
+    .auth-options {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px;
+    }
+    .auth-remember {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--gray-600); cursor: pointer; user-select: none;
+    }
+    .auth-remember input { accent-color: var(--primary); cursor: pointer; width: 15px; height: 15px; }
+    .auth-forgot { font-size: 13px; color: var(--primary); font-weight: 600; }
+    .auth-forgot:hover { text-decoration: underline; }
+
+    /* Submit button */
+    .auth-submit {
+      width: 100%; padding: 14px; background: var(--primary); color: #fff;
+      border: none; border-radius: var(--radius); font-size: 15px; font-weight: 800;
+      cursor: pointer; font-family: inherit; transition: var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      margin-bottom: 24px; letter-spacing: .2px;
+    }
+    .auth-submit:hover:not(:disabled) {
+      background: var(--primary-dark);
+      box-shadow: 0 8px 24px var(--primary-glow);
+      transform: translateY(-2px);
+    }
+    .auth-submit:disabled { background: #f4a27b; cursor: not-allowed; transform: none; }
+
+    /* Divider */
+    .auth-divider {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 20px; color: var(--gray-400); font-size: 12px; font-weight: 600;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--gray-200);
+    }
+
+    /* Switch link */
+    .auth-switch {
+      text-align: center; font-size: 14px; color: var(--gray-500);
+    }
+    .auth-switch a { color: var(--primary); font-weight: 700; }
+    .auth-switch a:hover { text-decoration: underline; }
+
+    /* Back to home */
+    .auth-back {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 13px; color: var(--gray-500); margin-bottom: 32px;
+      transition: color .2s;
+    }
+    .auth-back:hover { color: var(--primary); }
+    .auth-back i { font-size: 11px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .auth-left { display: none; }
+      .auth-right { width: 100%; padding: 48px 32px; }
+    }
+    @media (max-width: 480px) {
+      .auth-right { padding: 36px 20px; }
+      .auth-form-title { font-size: 24px; }
+    }
+
+    /* Minimal navbar for auth pages */
+    .auth-navbar {
+      background: var(--dark);
+      padding: 14px 0;
+    }
+    .auth-navbar .container {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .auth-navbar-brand {
+      display: flex; align-items: center; gap: 10px; color: #fff;
+      text-decoration: none;
+    }
+    .auth-navbar-brand-name { font-size: 16px; font-weight: 800; color: #fff; }
+    .auth-navbar-links { display: flex; gap: 20px; align-items: center; }
+    .auth-navbar-links a {
+      font-size: 13px; color: rgba(255,255,255,.6); transition: color .2s;
+    }
+    .auth-navbar-links a:hover { color: #fff; }
+    .auth-navbar-links a.active { color: var(--primary); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<!-- Minimal Navbar -->
+<header class="auth-navbar">
+  <div class="container">
+    <a href="index.html" class="auth-navbar-brand">
+      <div class="navbar-logo" style="width:34px;height:34px;font-size:15px;">
+        <i class="fas fa-hammer"></i>
+      </div>
+      <span class="auth-navbar-brand-name">BuildMart Hardware</span>
+    </a>
+    <div class="auth-navbar-links">
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="products.html"><i class="fas fa-store"></i> Products</a>
+      <a href="login.html" class="active"><i class="fas fa-sign-in-alt"></i> Login</a>
+    </div>
+  </div>
+</header>
+
+<!-- Auth Page -->
+<main class="auth-page">
+
+  <!-- Left Brand Panel -->
+  <div class="auth-left">
+    <div class="auth-left-logo">
+      <div class="auth-left-logo-icon"><i class="fas fa-hammer"></i></div>
+      <div>
+        <div class="auth-left-brand">BuildMart Hardware</div>
+        <div class="auth-left-tagline">Pirmahal's #1 Hardware Shop</div>
+      </div>
+    </div>
+
+    <h1 class="auth-left-heading">Welcome<br>Back to<br><span>BuildMart</span></h1>
+    <p class="auth-left-sub">
+      Sign in to track your orders, manage your account, and shop faster with saved details.
+    </p>
+
+    <ul class="auth-features">
+      <li class="auth-feature">
+        <div class="auth-feature-icon"><i class="fas fa-box"></i></div>
+        <div>
+          <div class="auth-feature-title">Track Your Orders</div>
+          <div class="auth-feature-desc">Real-time updates from placement to delivery</div>
+        </div>
+      </li>
+      <li class="auth-feature">
+        <div class="auth-feature-icon"><i class="fas fa-truck-fast"></i></div>
+        <div>
+          <div class="auth-feature-title">Free Delivery</div>
+          <div class="auth-feature-desc">On orders over Rs. 5,000 across Pirmahal</div>
+        </div>
+      </li>
+      <li class="auth-feature">
+        <div class="auth-feature-icon"><i class="fas fa-tag"></i></div>
+        <div>
+          <div class="auth-feature-title">Exclusive Discounts</div>
+          <div class="auth-feature-desc">Member-only deals and promo codes</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Right Form Panel -->
+  <div class="auth-right">
+    <a href="index.html" class="auth-back">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <div class="auth-form-header">
+      <h2 class="auth-form-title">Sign In</h2>
+      <p class="auth-form-sub">Enter your credentials to access your account.</p>
+    </div>
+
+    <!-- Error -->
+    <div class="auth-error-msg" id="loginError">
+      <i class="fas fa-circle-exclamation"></i>
+      <span id="loginErrorText"></span>
+    </div>
+
+    <form id="loginForm" novalidate>
+      <!-- Email -->
+      <div class="auth-field">
+        <label for="loginEmail">Email Address</label>
+        <div class="auth-input-wrap">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="loginEmail" class="auth-input"
+            placeholder="you@example.com" autocomplete="email" required>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="auth-field">
+        <label for="loginPass">Password</label>
+        <div class="auth-input-wrap has-toggle">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="loginPass" class="auth-input"
+            placeholder="Enter your password" autocomplete="current-password" required>
+          <button type="button" class="toggle-pass" id="toggleLoginPass" title="Show/hide password">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Options -->
+      <div class="auth-options">
+        <label class="auth-remember">
+          <input type="checkbox" id="rememberMe"> Remember me
+        </label>
+        <a href="#" class="auth-forgot">Forgot password?</a>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="auth-submit" id="loginBtn">
+        <i class="fas fa-sign-in-alt"></i> Sign In
+      </button>
+    </form>
+
+    <div class="auth-divider">or</div>
+
+    <div class="auth-switch">
+      Don't have an account? <a href="signup.html">Create one — it's free</a>
+    </div>
+  </div>
+
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/api.js"></script>
+<script src="js/cart.js"></script>
+<script>
+(function () {
+  // Redirect if already logged in
+  if (typeof Auth !== "undefined" && Auth.getUser()) {
+    window.location.href = "index.html";
+  }
+
+  // Password toggle
+  document.getElementById("toggleLoginPass").addEventListener("click", function () {
+    const inp = document.getElementById("loginPass");
+    const icon = this.querySelector("i");
+    if (inp.type === "password") {
+      inp.type = "text";
+      icon.className = "fas fa-eye-slash";
+    } else {
+      inp.type = "password";
+      icon.className = "fas fa-eye";
+    }
+  });
+
+  function showError(msg) {
+    document.getElementById("loginErrorText").textContent = msg;
+    document.getElementById("loginError").classList.add("show");
+  }
+  function hideError() {
+    document.getElementById("loginError").classList.remove("show");
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    hideError();
+    const email = document.getElementById("loginEmail").value.trim();
+    const pass  = document.getElementById("loginPass").value;
+    if (!email || !pass) { showError("Please fill in all fields."); return; }
+
+    const btn = document.getElementById("loginBtn");
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in…';
+
+    try {
+      await AuthAPI.login(email, pass);
+      // Redirect to previous page or home
+      const redirect = new URLSearchParams(window.location.search).get("redirect");
+      window.location.href = redirect || "index.html";
+    } catch (err) {
+      showError(err.message || "Invalid email or password. Please try again.");
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+    }
+  });
+})();
+</script>
+</body>
+</html>

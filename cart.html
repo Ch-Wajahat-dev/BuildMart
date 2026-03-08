@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart — BuildMart Hardware</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- ======================================================
+     MOBILE NAV
+     ====================================================== -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<nav class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <div class="navbar-brand" style="pointer-events:none;">
+      <div class="navbar-logo"><i class="fas fa-hammer"></i></div>
+      <span class="navbar-brand-name">BuildMart Hardware</span>
+    </div>
+    <button class="mobile-nav-close" id="mobileClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="mobile-nav-links">
+    <a href="index.html"    class="mobile-nav-link"><i class="fas fa-home"></i>        Home</a>
+    <a href="products.html" class="mobile-nav-link"><i class="fas fa-store"></i>       Products</a>
+    <a href="cart.html"     class="mobile-nav-link"><i class="fas fa-cart-shopping"></i> Cart</a>
+  </div>
+</nav>
+
+<!-- ======================================================
+     NAVBAR
+     ====================================================== -->
+<header class="navbar">
+  <div class="navbar-top">
+    <div class="container">
+      <div class="navbar-top-info">
+        <span><i class="fas fa-phone"></i> +92 939 123456</span>
+        <span><i class="fas fa-envelope"></i> info@BuildMart.pk</span>
+      </div>
+      <div class="navbar-top-links">
+        <span><i class="fas fa-truck"></i> Free delivery over Rs. 5,000</span>
+        <a href="orders.html"><i class="fas fa-box"></i> My Orders</a>
+      </div>
+    </div>
+  </div>
+  <div class="navbar-main">
+    <div class="container">
+      <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+      <a href="index.html" class="navbar-brand">
+        <div class="navbar-logo"><i class="fas fa-hammer"></i></div>
+        <div class="navbar-brand-text">
+          <div class="navbar-brand-name">BuildMart Hardware</div>
+          <div class="navbar-brand-tagline">Pirmahal's #1 Hardware Shop</div>
+        </div>
+      </a>
+      <form class="navbar-search" action="products.html" method="get">
+        <i class="fas fa-search navbar-search-icon"></i>
+        <input type="text" name="q" placeholder="Search products…">
+      </form>
+      <div class="navbar-actions">
+        <a href="cart.html" class="navbar-action-btn" title="Cart">
+          <i class="fas fa-cart-shopping"></i>
+          <span class="cart-badge" style="display:none;">0</span>
+        </a>
+        <a href="#" class="navbar-action-btn" title="Account"><i class="fas fa-user"></i></a>
+      </div>
+    </div>
+  </div>
+  <nav class="navbar-nav">
+    <div class="container">
+      <a href="index.html"    class="nav-link"><i class="fas fa-home"></i> Home</a>
+      <a href="products.html" class="nav-link"><i class="fas fa-store"></i> All Products</a>
+      <a href="products.html?category=hand-tools"  class="nav-link"><i class="fas fa-hammer"></i> Hand Tools</a>
+      <a href="products.html?category=power-tools" class="nav-link"><i class="fas fa-screwdriver-wrench"></i> Power Tools</a>
+      <a href="products.html?category=electrical"  class="nav-link"><i class="fas fa-bolt"></i> Electrical</a>
+      <a href="products.html?category=plumbing"    class="nav-link"><i class="fas fa-faucet"></i> Plumbing</a>
+      <a href="products.html?category=safety"      class="nav-link"><i class="fas fa-helmet-safety"></i> Safety</a>
+      <a href="cart.html"                          class="nav-link active"><i class="fas fa-cart-shopping"></i> Cart</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ======================================================
+     PAGE HEADER
+     ====================================================== -->
+<section class="page-header">
+  <div class="container">
+    <div class="page-header-content">
+      <div>
+        <h1>Shopping Cart</h1>
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <i class="fas fa-chevron-right" style="font-size:10px;"></i>
+          <span>Cart</span>
+        </div>
+      </div>
+      <a href="products.html" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.4);">
+        <i class="fas fa-arrow-left"></i> Continue Shopping
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     CART CONTENT
+     ====================================================== -->
+<main class="cart-page">
+  <div class="container">
+    <div class="cart-layout">
+
+      <!-- ---- CART ITEMS ---- -->
+      <div>
+        <div class="cart-items-section">
+          <div class="cart-section-header">
+            <h2><i class="fas fa-cart-shopping"></i> Cart Items <span id="cartCount"></span></h2>
+            <button class="btn btn-sm" style="color:var(--danger);border:1px solid var(--danger);background:transparent;border-radius:var(--radius);padding:6px 12px;cursor:pointer;font-size:13px;font-weight:600;" onclick="clearCart()">
+              <i class="fas fa-trash"></i> Clear Cart
+            </button>
+          </div>
+          <!-- Free shipping progress banner -->
+          <div class="free-ship-banner" id="freeShipBanner" style="display:none;">
+            <i class="fas fa-truck-fast"></i>
+            <div style="flex:1;">
+              <span id="freeShipMsg"></span>
+              <div class="free-ship-bar" style="margin-top:6px;">
+                <div class="free-ship-bar-fill" id="freeShipBarFill" style="width:0%;"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Cart items rendered here -->
+          <div id="cartContainer"></div>
+        </div>
+
+        <!-- Recommended products -->
+        <div style="margin-top:28px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <h3 style="font-size:18px;font-weight:700;color:var(--dark);">You May Also Like</h3>
+            <a href="products.html" class="btn btn-sm btn-outline">View All</a>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;" id="recommendedGrid"></div>
+        </div>
+      </div>
+
+      <!-- ---- ORDER SUMMARY ---- -->
+      <div id="summarySection">
+        <div class="order-summary">
+          <div class="order-summary-header">
+            <h2><i class="fas fa-receipt"></i> Order Summary</h2>
+          </div>
+          <div class="order-summary-body">
+            <div class="summary-row"><span>Subtotal</span>     <span id="summarySubtotal">Rs. 0</span></div>
+            <div class="summary-row"><span>Discount</span>     <span id="summaryDiscount">—</span></div>
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span id="summaryShipping">Rs. 250</span>
+            </div>
+            <div class="summary-row"><span>GST (5%)</span>     <span id="summaryTax">Rs. 0</span></div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span class="summary-total-amount" id="summaryTotal">Rs. 0</span>
+            </div>
+
+            <!-- Promo Code -->
+            <div style="margin-top:16px;">
+              <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:8px;">
+                <i class="fas fa-tag"></i> Promo Code
+              </div>
+              <div id="promoMsg" class="promo-msg"></div>
+              <div class="promo-input-row">
+                <input type="text" class="promo-input" id="promoInput" placeholder="e.g. PIRMAHAL10" style="text-transform:uppercase;">
+                <button class="btn btn-dark btn-sm" id="applyPromo">Apply</button>
+              </div>
+              <div style="font-size:11px;color:var(--gray-400);">Try: PIRMAHAL10, HARDWARE20, SAVE15</div>
+            </div>
+
+            <button class="checkout-btn" id="checkoutBtn" style="margin-top:20px;">
+              <i class="fas fa-lock"></i> Proceed to Checkout
+            </button>
+
+            <div class="secure-badges">
+              <span class="secure-badge"><i class="fas fa-shield-halved"></i> Secure</span>
+              <span class="secure-badge"><i class="fas fa-rotate-left"></i> 7-Day Return</span>
+              <span class="secure-badge"><i class="fas fa-truck-fast"></i> Fast Delivery</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment methods -->
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:16px 20px;margin-top:16px;box-shadow:var(--shadow-sm);">
+          <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:12px;">We Accept</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <span style="background:var(--gray-100);padding:6px 14px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;color:var(--gray-600);">JazzCash</span>
+            <span style="background:var(--gray-100);padding:6px 14px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;color:var(--gray-600);">EasyPaisa</span>
+            <span style="background:var(--gray-100);padding:6px 14px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;color:var(--gray-600);">Cash on Delivery</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- ======================================================
+     FOOTER
+     ====================================================== -->
+<footer class="footer">
+  <div class="footer-main">
+    <div class="container">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div class="navbar-logo"><i class="fas fa-hammer"></i></div>
+          <div class="footer-brand-name">BuildMart Hardware</div>
+        </div>
+        <p class="footer-brand-desc">Pirmahal's most trusted hardware shop since 1998.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <div class="footer-links">
+          <a href="index.html"    class="footer-link">Home</a>
+          <a href="products.html" class="footer-link">All Products</a>
+          <a href="cart.html"     class="footer-link">My Cart</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Categories</div>
+        <div class="footer-links">
+          <a href="products.html?category=hand-tools"  class="footer-link">Hand Tools</a>
+          <a href="products.html?category=power-tools" class="footer-link">Power Tools</a>
+          <a href="products.html?category=electrical"  class="footer-link">Electrical</a>
+          <a href="products.html?category=plumbing"    class="footer-link">Plumbing</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-contact-item"><i class="fas fa-location-dot"></i><span>Main Bazar, Pirmahal, Punjab</span></div>
+        <div class="footer-contact-item"><i class="fas fa-phone"></i><span>+92 939 123456</span></div>
+        <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Mon–Sat: 8 AM – 8 PM</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <span>&copy; 2025 BuildMart  Hardware. All rights reserved.</span>
+      <div class="footer-payment-icons">
+        <span class="payment-icon">JazzCash</span>
+        <span class="payment-icon">EasyPaisa</span>
+        <span class="payment-icon">Cash</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ======================================================
+     CHECKOUT MODAL
+     ====================================================== -->
+<div class="modal-overlay" id="checkoutModal">
+  <div style="background:#fff;border-radius:20px;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;padding:32px;position:relative;">
+    <button onclick="document.getElementById('checkoutModal').classList.remove('show')"
+      style="position:absolute;top:16px;right:16px;background:var(--gray-100);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">
+      <i class="fas fa-times"></i>
+    </button>
+    <h2 style="font-size:20px;font-weight:700;margin-bottom:4px;"><i class="fas fa-truck" style="color:var(--primary);"></i> Delivery Details</h2>
+    <p style="color:var(--gray-500);font-size:13px;margin-bottom:24px;">Fill in your details to place the order.</p>
+
+    <form id="checkoutForm" novalidate>
+      <!-- Name + Phone -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--gray-600);display:block;margin-bottom:5px;">Full Name *</label>
+          <input type="text" id="co-name" placeholder="Ahmad Khan" required
+            style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:10px;font-size:14px;font-family:inherit;box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--gray-600);display:block;margin-bottom:5px;">Phone Number *</label>
+          <input type="tel" id="co-phone" placeholder="03XX-1234567" required
+            style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:10px;font-size:14px;font-family:inherit;box-sizing:border-box;">
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div style="margin-bottom:14px;">
+        <label style="font-size:12px;font-weight:600;color:var(--gray-600);display:block;margin-bottom:5px;">Street Address *</label>
+        <input type="text" id="co-address" placeholder="House #, Street, Mohalla" required
+          style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:10px;font-size:14px;font-family:inherit;box-sizing:border-box;">
+      </div>
+
+      <!-- City -->
+      <div style="margin-bottom:14px;">
+        <label style="font-size:12px;font-weight:600;color:var(--gray-600);display:block;margin-bottom:5px;">City *</label>
+        <input type="text" id="co-city" placeholder="e.g. Pirmahal" required
+          style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:10px;font-size:14px;font-family:inherit;box-sizing:border-box;">
+      </div>
+
+      <!-- Payment Method -->
+      <div style="margin-bottom:14px;">
+        <label style="font-size:12px;font-weight:600;color:var(--gray-600);display:block;margin-bottom:8px;">Payment Method *</label>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;border:1.5px solid var(--gray-200);border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;flex:1;min-width:120px;" id="pm-cod">
+            <input type="radio" name="paymentMethod" value="cod" checked style="accent-color:var(--primary);">
+            <i class="fas fa-money-bill-wave" style="color:#10b981;"></i> Cash on Delivery
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;border:1.5px solid var(--gray-200);border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;flex:1;min-width:120px;" id="pm-jazzcash">
+            <input type="radio" name="paymentMethod" value="jazzcash" style="accent-color:var(--primary);">
+            <i class="fas fa-mobile-alt" style="color:#e91e8c;"></i> JazzCash
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;border:1.5px solid var(--gray-200);border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;flex:1;min-width:120px;" id="pm-easypaisa">
+            <input type="radio" name="paymentMethod" value="easypaisa" style="accent-color:var(--primary);">
+            <i class="fas fa-mobile-alt" style="color:#4CAF50;"></i> EasyPaisa
+          </label>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div style="margin-bottom:20px;">
+        <label style="font-size:12px;font-weight:600;color:var(--gray-600);display:block;margin-bottom:5px;">Order Notes <span style="font-weight:400;color:var(--gray-400);">(optional)</span></label>
+        <textarea id="co-notes" rows="2" placeholder="Any special instructions for delivery…"
+          style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:10px;font-size:14px;font-family:inherit;resize:none;box-sizing:border-box;"></textarea>
+      </div>
+
+      <!-- Error -->
+      <div id="coError" style="color:var(--danger);font-size:13px;margin-bottom:12px;display:none;"></div>
+
+      <!-- Order summary mini -->
+      <div id="coSummaryMini" style="background:var(--gray-100);border-radius:10px;padding:14px;margin-bottom:20px;font-size:13px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:var(--gray-600);">Subtotal</span><span id="coSubtotal" style="font-weight:600;"></span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:var(--gray-600);">Shipping</span><span id="coShipping" style="font-weight:600;"></span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:var(--gray-600);">Discount</span><span id="coDiscount" style="font-weight:600;color:var(--success);"></span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:var(--gray-600);">GST (5%)</span><span id="coTax" style="font-weight:600;"></span></div>
+        <div style="display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--gray-200);margin-top:4px;"><span style="font-weight:700;font-size:15px;">Total</span><span id="coTotal" style="font-weight:700;font-size:15px;color:var(--primary);"></span></div>
+      </div>
+
+      <button type="submit" id="placeOrderBtn" class="btn btn-primary" style="width:100%;padding:14px;font-size:15px;font-weight:700;border-radius:12px;">
+        <i class="fas fa-check-circle"></i> Place Order
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ======================================================
+     ORDER SUCCESS MODAL
+     ====================================================== -->
+<div class="modal-overlay" id="orderSuccessModal">
+  <div style="background:#fff;border-radius:20px;width:100%;max-width:440px;padding:40px 32px;text-align:center;">
+    <div style="width:72px;height:72px;background:#d1fae5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+      <i class="fas fa-check" style="font-size:32px;color:#10b981;"></i>
+    </div>
+    <h2 style="font-size:22px;font-weight:700;margin-bottom:8px;">Order Placed!</h2>
+    <p style="color:var(--gray-500);font-size:14px;margin-bottom:6px;">Thank you for your order.</p>
+    <div id="successOrderId" style="font-size:13px;color:var(--gray-500);margin-bottom:24px;"></div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <a href="orders.html" class="btn btn-primary" style="padding:12px;font-size:15px;font-weight:600;">
+        <i class="fas fa-box"></i> Track My Order
+      </a>
+      <a href="products.html" class="btn btn-outline" style="padding:12px;font-size:14px;">
+        <i class="fas fa-store"></i> Continue Shopping
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/api.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/auth-modal.js"></script>
+<script src="js/cart-page.js"></script>
+<script>
+// Render 3 recommended products (not already in cart)
+document.addEventListener("DOMContentLoaded", () => {
+  const grid = document.getElementById("recommendedGrid");
+  if (!grid) return;
+  const cartIds = Cart.items.map(i => i.id);
+  const recs = PRODUCTS.filter(p => !cartIds.includes(p.id) && p.featured).slice(0, 3);
+  const fallback = PRODUCTS.filter(p => !cartIds.includes(p.id)).slice(0, 3);
+  const list = recs.length >= 3 ? recs : fallback;
+  grid.innerHTML = list.map(buildProductCard).join("");
+});
+</script>
+</body>
+</html>

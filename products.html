@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — IronCraft Hardware</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- ======================================================
+     MOBILE NAV
+     ====================================================== -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<nav class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <div class="navbar-brand" style="pointer-events:none;">
+      <div class="navbar-logo"><i class="fas fa-hammer"></i></div>
+      <span class="navbar-brand-name">IronCraft Hardware</span>
+    </div>
+    <button class="mobile-nav-close" id="mobileClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="mobile-nav-links">
+    <a href="index.html"    class="mobile-nav-link"><i class="fas fa-home"></i>        Home</a>
+    <a href="products.html" class="mobile-nav-link"><i class="fas fa-store"></i>       Products</a>
+    <a href="products.html?category=hand-tools"  class="mobile-nav-link"><i class="fas fa-hammer"></i>          Hand Tools</a>
+    <a href="products.html?category=power-tools" class="mobile-nav-link"><i class="fas fa-screwdriver-wrench"></i> Power Tools</a>
+    <a href="products.html?category=electrical"  class="mobile-nav-link"><i class="fas fa-bolt"></i>            Electrical</a>
+    <a href="products.html?category=plumbing"    class="mobile-nav-link"><i class="fas fa-faucet"></i>          Plumbing</a>
+    <a href="cart.html" class="mobile-nav-link"><i class="fas fa-cart-shopping"></i>   Cart</a>
+  </div>
+</nav>
+
+<!-- ======================================================
+     NAVBAR
+     ====================================================== -->
+<header class="navbar">
+  <div class="navbar-top">
+    <div class="container">
+      <div class="navbar-top-info">
+        <span><i class="fas fa-phone"></i> +92 939 123456</span>
+        <span><i class="fas fa-envelope"></i> info@ironcraft.pk</span>
+      </div>
+      <div class="navbar-top-links">
+        <span><i class="fas fa-truck"></i> Free delivery over Rs. 5,000</span>
+        <a href="orders.html"><i class="fas fa-box"></i> My Orders</a>
+      </div>
+    </div>
+  </div>
+  <div class="navbar-main">
+    <div class="container">
+      <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+      <a href="index.html" class="navbar-brand">
+        <div class="navbar-logo"><i class="fas fa-hammer"></i></div>
+        <div class="navbar-brand-text">
+          <div class="navbar-brand-name">IronCraft Hardware</div>
+          <div class="navbar-brand-tagline">Pirmahal's #1 Hardware Shop</div>
+        </div>
+      </a>
+      <form class="navbar-search" action="products.html" method="get">
+        <i class="fas fa-search navbar-search-icon"></i>
+        <input type="text" name="q" id="navSearch" placeholder="Search tools, electrical, plumbing…">
+      </form>
+      <div class="navbar-actions">
+        <a href="cart.html" class="navbar-action-btn" title="Cart">
+          <i class="fas fa-cart-shopping"></i>
+          <span class="cart-badge" style="display:none;">0</span>
+        </a>
+        <a href="#" class="navbar-action-btn" title="Account"><i class="fas fa-user"></i></a>
+      </div>
+    </div>
+  </div>
+  <nav class="navbar-nav">
+    <div class="container">
+      <a href="index.html"    class="nav-link"><i class="fas fa-home"></i> Home</a>
+      <a href="products.html" class="nav-link active"><i class="fas fa-store"></i> All Products</a>
+      <a href="products.html?category=hand-tools"  class="nav-link"><i class="fas fa-hammer"></i> Hand Tools</a>
+      <a href="products.html?category=power-tools" class="nav-link"><i class="fas fa-screwdriver-wrench"></i> Power Tools</a>
+      <a href="products.html?category=electrical"  class="nav-link"><i class="fas fa-bolt"></i> Electrical</a>
+      <a href="products.html?category=plumbing"    class="nav-link"><i class="fas fa-faucet"></i> Plumbing</a>
+      <a href="products.html?category=safety"      class="nav-link"><i class="fas fa-helmet-safety"></i> Safety</a>
+      <a href="products.html?category=paint"       class="nav-link"><i class="fas fa-paint-roller"></i> Paint</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ======================================================
+     PAGE HEADER
+     ====================================================== -->
+<section class="page-header">
+  <div class="container">
+    <div class="page-header-content">
+      <div>
+        <h1>Our Products</h1>
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <i class="fas fa-chevron-right" style="font-size:10px;"></i>
+          <span>Products</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <span style="color:var(--gray-400);font-size:14px;"><i class="fas fa-box-open"></i> 24 Products Available</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     PRODUCTS PAGE CONTENT
+     ====================================================== -->
+<main class="products-page">
+  <div class="container">
+    <div class="products-layout">
+
+      <!-- ---- SIDEBAR FILTERS ---- -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h3><i class="fas fa-sliders"></i> Filters</h3>
+          <button class="btn btn-sm btn-outline" id="clearFilters">Clear All</button>
+        </div>
+
+        <!-- Categories -->
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">Category</div>
+          <div id="catFilters"><!-- Rendered by JS --></div>
+        </div>
+
+        <!-- Price Range -->
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">Price Range</div>
+          <div class="price-slider-row">
+            <input type="range" id="priceSlider" min="100" max="12000" step="100" value="12000">
+          </div>
+          <div class="price-display">
+            <span>Rs. 0</span>
+            <span id="priceDisplay">Rs. 12,000</span>
+          </div>
+        </div>
+
+        <!-- Rating -->
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">Minimum Rating</div>
+          <div class="rating-filter" id="ratingFilters"><!-- Rendered by JS --></div>
+        </div>
+
+        <!-- Sale Items -->
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">Deals</div>
+          <label class="filter-option">
+            <input type="checkbox" onchange="toggleSale(this)">
+            <i class="fas fa-tag" style="color:var(--danger);width:16px;"></i>
+            On Sale
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" onchange="toggleNew(this)">
+            <i class="fas fa-star" style="color:var(--success);width:16px;"></i>
+            New Arrivals
+          </label>
+        </div>
+      </aside>
+
+      <!-- ---- PRODUCTS MAIN ---- -->
+      <div class="products-main">
+        <!-- Toolbar -->
+        <div class="products-toolbar">
+          <button class="btn btn-outline btn-sm filter-toggle-btn" id="filterToggle">
+            <i class="fas fa-sliders"></i> Filters
+          </button>
+          <div class="products-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="productSearch" placeholder="Search products…">
+          </div>
+          <span class="products-count" id="productsCount">Showing 1–9 of 24 products</span>
+          <select class="sort-select" id="sortSelect">
+            <option value="default">Default</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Highest Rated</option>
+            <option value="name">Name A–Z</option>
+            <option value="newest">New Arrivals</option>
+          </select>
+        </div>
+
+        <!-- Grid -->
+        <div class="products-grid-main" id="productsGrid">
+          <!-- Rendered by JS -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- ======================================================
+     FOOTER
+     ====================================================== -->
+<footer class="footer">
+  <div class="footer-main">
+    <div class="container">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div class="navbar-logo"><i class="fas fa-hammer"></i></div>
+          <div class="footer-brand-name">IronCraft Hardware</div>
+        </div>
+        <p class="footer-brand-desc">Pirmahal's most trusted hardware shop since 1998.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <div class="footer-links">
+          <a href="index.html"    class="footer-link">Home</a>
+          <a href="products.html" class="footer-link">All Products</a>
+          <a href="cart.html"     class="footer-link">My Cart</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Categories</div>
+        <div class="footer-links">
+          <a href="products.html?category=hand-tools"  class="footer-link">Hand Tools</a>
+          <a href="products.html?category=power-tools" class="footer-link">Power Tools</a>
+          <a href="products.html?category=electrical"  class="footer-link">Electrical</a>
+          <a href="products.html?category=plumbing"    class="footer-link">Plumbing</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-contact-item"><i class="fas fa-location-dot"></i><span>Main Bazar, Pirmahal, Punjab</span></div>
+        <div class="footer-contact-item"><i class="fas fa-phone"></i><span>+92 939 123456</span></div>
+        <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Mon–Sat: 8 AM – 8 PM</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <span>&copy; 2025 IronCraft Hardware. All rights reserved.</span>
+      <div class="footer-payment-icons">
+        <span class="payment-icon">JazzCash</span>
+        <span class="payment-icon">EasyPaisa</span>
+        <span class="payment-icon">Cash</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/api.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/auth-modal.js"></script>
+<script src="js/products.js"></script>
+<script>
+// Extra filter helpers for on-sale and new items
+let filterSale = false;
+let filterNew  = false;
+
+function toggleSale(cb) {
+  filterSale = cb.checked;
+  patchApplyFilters();
+}
+function toggleNew(cb) {
+  filterNew = cb.checked;
+  patchApplyFilters();
+}
+
+// Patch applyFilters to include sale/new filtering
+const _origApply = applyFilters;
+function patchApplyFilters() {
+  // Use the existing applyFilters but also filter by sale/new
+  let list = [...PRODUCTS];
+  if (activeCategories.size > 0) list = list.filter(p => activeCategories.has(p.category));
+  list = list.filter(p => p.price <= maxPrice);
+  if (minRating > 0) list = list.filter(p => p.rating >= minRating);
+  if (searchQuery) list = list.filter(p =>
+    p.name.toLowerCase().includes(searchQuery) ||
+    p.categoryName.toLowerCase().includes(searchQuery) ||
+    p.brand.toLowerCase().includes(searchQuery)
+  );
+  if (filterSale) list = list.filter(p => p.onSale);
+  if (filterNew)  list = list.filter(p => p.isNew);
+  switch (sortBy) {
+    case "price-asc":  list.sort((a,b) => a.price - b.price); break;
+    case "price-desc": list.sort((a,b) => b.price - a.price); break;
+    case "rating":     list.sort((a,b) => b.rating - a.rating); break;
+    case "name":       list.sort((a,b) => a.name.localeCompare(b.name)); break;
+    case "newest":     list.sort((a,b) => (b.isNew?1:0) - (a.isNew?1:0)); break;
+  }
+  filteredProducts = list;
+  currentPage = 1;
+  renderProducts();
+  renderPagination();
+}
+</script>
+</body>
+</html>
